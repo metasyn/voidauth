@@ -291,6 +291,36 @@ Redirect URLs:
 
 <br>
 
+## <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/incus.svg" width="28" /> Incus
+
+Incus requires JWT-formatted access tokens for OIDC authentication. Set the `ACCESS_TOKEN_FORMAT` environment variable to `jwt` in your VoidAuth configuration.
+
+**VoidAuth Environment Variable:**
+
+```bash
+ACCESS_TOKEN_FORMAT="jwt"
+```
+
+**Incus Server Configuration:**
+
+```bash
+incus config set oidc.issuer="https://voidauth.example.com/oidc"
+incus config set oidc.client.id="your-client-id"
+```
+
+**In VoidAuth OIDC App Page:**
+
+```plaintext
+Client ID: your-client-id
+Auth Method: None
+Redirect URLs: https://incus.example.com:8443/oidc/callback
+```
+
+> [!NOTE]
+> Incus uses PKCE with a public client (no client secret). Set the Auth Method to `None` in the VoidAuth OIDC App page.
+
+<br>
+
 ## <img src="https://cdn.jsdelivr.net/gh/selfhst/icons/svg/jellyfin.svg" width="28" /> Jellyfin
 
 Install the [Jellyfin SSO Plugin](https://github.com/9p4/jellyfin-plugin-sso). Navigate to **Dashboard** > **Plugins** > **Catalog** > **Repositories** and add:

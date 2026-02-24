@@ -1,7 +1,8 @@
 #
 # Builder
 #
-FROM node:24-alpine3.22 AS install
+ARG BASE_IMAGE=dhi.io/node:24-alpine3.22
+FROM ${BASE_IMAGE} AS install
 
 WORKDIR /app
 
@@ -40,7 +41,7 @@ RUN cd ./dist && npm i
 # 
 # Compile all outputs into /app folder
 # 
-FROM node:24-alpine3.22 AS build
+FROM ${BASE_IMAGE} AS build
 
 WORKDIR /app
 
@@ -58,7 +59,7 @@ COPY --chmod=0777 ./migrations ./migrations
 # Serve files and api endpoints
 # Requires a login to dhi.io
 #
-FROM dhi.io/node:24-alpine3.22 AS serve
+FROM ${BASE_IMAGE} AS serve
 
 WORKDIR /app
 

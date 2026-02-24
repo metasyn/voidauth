@@ -188,6 +188,26 @@ if (!providerCookieKeys.length) {
   throw new Error('No Cookie Signing Keys found.')
 }
 
+const jwtResourceIndicators: Partial<Configuration['features']> = {}
+if (appConfig.ACCESS_TOKEN_FORMAT === 'jwt') {
+  jwtResourceIndicators.resourceIndicators = {
+    enabled: true,
+    defaultResource(_ctx) {
+      return 'urn:voidauth:default'
+    },
+    getResourceServerInfo(_ctx, _resourceIndicator, _client) {
+      return {
+        scope: 'openid offline_access profile email groups',
+        accessTokenFormat: 'jwt' as const,
+        accessTokenTTL: 3600,
+      }
+    },
+    useGrantedResource(_ctx, _model) {
+      return true
+    },
+  }
+}
+
 const configuration: Configuration = {
   features: {
     devInteractions: {
@@ -199,6 +219,7 @@ const configuration: Configuration = {
     revocation: {
       enabled: true,
     },
+    ...jwtResourceIndicators,
     rpInitiatedLogout: {
       // custom logout question page
       logoutSource: (ctx, _form) => {

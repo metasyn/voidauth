@@ -59,6 +59,9 @@ class Config {
   SMTP_USER?: string
   SMTP_PASS?: string
   SMTP_IGNORE_CERT: boolean = false
+
+  // OIDC access token format: 'opaque' (default) or 'jwt'
+  ACCESS_TOKEN_FORMAT: string = 'opaque'
 }
 const appConfig = new Config()
 
